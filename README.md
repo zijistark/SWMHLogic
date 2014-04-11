@@ -28,6 +28,7 @@ Otherwise, most actual work will be done on topic branches that will be added an
 Please use email. I cannot be reliably reached through the Paradox Forums, for example.
 
 Matthew D. Hall (**zijistark**)
+
 Seattle, WA, USA (PST/PDT)
-[zijistark.com](http://www.zijistark.com/)
+
 [zijistark@gmail.com](mailto:zijistark@gmail.com)
