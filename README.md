@@ -21,7 +21,9 @@ In general, my intentions are:
 
 The master branch will always be a snapshot of the latest stable, public release.  As SWMH Logic will mostly certainly make hard references to SWMH titles and even possibly dynasty IDs or the like, it will be necessarily updated along with SWMH to reflect changes in those dependencies.  This sort of 'general updates' work will be queued in a beta branch before releasing into master.  The path from beta -> master is known as the mainline development path.
 
-Otherwise, most actual work will be done on topic branches that will be added and deleted as necessary, and then usually merged into mainline-- beta before master-- so that different queued changes get a chance to be tested together before public release.  Sometimes, topic branches, even though their development is done, will also remain out of mainline until SWMH is getting ready to release whatever enhancement it is for which the branch's contents are complementary.  This makes a snapshot of the beta branch always valid for testing against the current development version of SWMH.
+Otherwise, most actual work will be done on topic branches that will be added and deleted as necessary, and then usually merged into mainline-- beta before master-- so that different queued changes get a chance to be tested together before public release.
+
+Sometimes, topic branches, even though their development is done, will also remain out of mainline until SWMH is getting ready to release whatever enhancement it is for which the branch's contents are complementary.  This makes a snapshot of the beta branch always valid for testing against the current development version of SWMH.
 
 ## Contact Information ##
 
