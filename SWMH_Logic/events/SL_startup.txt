@@ -1,0 +1,27 @@
+
+namespace = SL
+
+character_event = {
+	id = SL.0
+	desc = OK
+	hide_window = yes
+	is_triggered_only = yes
+	
+	trigger = {
+		not = { has_global_flag = swmh_logic }
+	}
+	
+	immediate = {
+		set_global_flag = swmh_logic
+		
+		if = { # SL should initialize before PB+SWMH does
+			limit = { has_global_flag = project_balance }
+			set_global_flag = sl_init_after_pb # At least make note of it in the save
+		}
+	
+		# Enforce sane cultural defaults for german melts
+		character_event = { id = SL_german.0 }
+	}
+	
+	option = { name = OK }
+}

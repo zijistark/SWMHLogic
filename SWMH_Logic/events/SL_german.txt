@@ -1,0 +1,97 @@
+
+namespace = SL_german
+
+# SL_german.0 // startup_german
+#
+# Startup event to enforce cultural sanity with regard to SWMH's german/dutch
+# cultural melt and its multiple melt dates
+#
+# Catches cases where a character's culture should be converted to a newer one
+# or to an older one (only occurs due to historical lowborns / dynasties omitted
+# from culture-melt's rules).
+#
+# E.g., there should be no "high germans" (culture=german) before 1170.1.1, yet
+# there most certainly are miscellaneous instances in the character history
+# wherein this is the case.
+#
+# Thus, we provide sane defaults for all "impossible" cases, and we try to make
+# smart choices about cultural conversion of older characters with 'old-style'
+# cultures at post-melt start dates.
+#
+# The [planned] dynamic melting pot event chains will catch the latter cases,
+# but we want as many qualifying characters to reflect the proper culture
+# for their start date as possible before the user even loads the game.
+# Thus, for converting to post-melt cultures at startup, we can actually just
+# trigger parts of those dynamic event chains statically upon startup to
+# consistently apply the same melt logic as we do dynamically and reuse a
+# great deal of fairly complex code. [TODO]
+
+character_event = {
+	id = SL_german.0
+	desc = OK
+	hide_window = yes
+	is_triggered_only = yes
+	
+	immediate = {
+		
+		if = {
+			limit = { not = { year = 1170 } } # Impossible character cultures exist
+			
+			any_independent_ruler = {
+				
+				any_realm_character = {
+					limit = { culture = german }
+					
+					# Try to figure out a decent default based upon character locale
+					location = {
+						
+						# If the locale is one the german subcultures, then convert the
+						# the character to that culture.
+						
+						if = {
+							limit = { culture_group = central_germanic }
+							reverse_culture = prev
+						}
+						
+						# If not (italian_group + frankish provinces + perhaps some
+						# in wendish areas), convert them to franconians by default.
+						
+						# Not the finest
+						# fallback in the world, but does anyone have a better idea?
+						# The province history, after all, can be trusted to melt
+						# at the proper dates and reflect the proper regions, so
+						# our only weird cases are going to be the occasional franconian
+						# in wendish or italian areas which are inappropriate. But who's
+						# to say? These characters are the least likely to matter since
+						# they weren't covered by culture-melt rules, and they're probably
+						# lowborn.
+					
+						if = {
+							limit = { NOT = { culture_group = central_germanic } }
+							culture = franconian
+						}
+					}
+				}
+				
+				if = {
+					limit = { NOT = { year = 1150 } }
+
+					any_realm_character = {
+						limit = { culture = dutch }
+						
+						# All locales pragmatically still point to low_frankish, so we
+						# unconditionally reverse-melt dutch->low_frankish before 1150.
+						
+						culture = low_frankish
+					}
+				}
+			}
+		}
+		
+		# TODO: All post-melt dynamic adaptation of character history is postponed
+		# until I code the parts of the dynamic melting pot logic which can be
+		# reused consistently here.
+	}
+	
+	option = { name = OK }
+}
